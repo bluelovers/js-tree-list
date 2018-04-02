@@ -1,5 +1,5 @@
 import LTT from './tree';
-export default class ListToTree<T = any> {
+export declare class ListToTree<T = any> {
     options: {
         key_id?: string;
         key_parent?: string;
@@ -21,3 +21,4 @@ export default class ListToTree<T = any> {
     last(val: any, key_id: any, key_last: any, key_child: any): void;
     GetTree(): any;
 }
+export default ListToTree;

@@ -1,11 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-/**
- * node-compare-by-id
- * Return callback to compare nodes by id
- * @param  boolean  vector If vector is true then sort asc else desc
- * @return function Compare function
- */
 exports.compareById = vector => {
     return (a, b) => {
         const aid = Number(a.get('id'));
@@ -85,7 +79,7 @@ exports.showTree = (tree, node = null, level = 1) => {
  * @param {*} criteria
  * @param {*} callback
  */
-exports.traversalTree = (tree, node = null, criteria, callback) => {
+function traversalTree(tree, node = null, criteria, callback) {
     const currentNode = node || tree.rootNode;
     if (!node) {
         if (typeof criteria === 'function' && criteria(currentNode)) {
@@ -98,9 +92,10 @@ exports.traversalTree = (tree, node = null, criteria, callback) => {
     currentNode.traversal(criteria, callback);
     const children = currentNode.children;
     children.forEach(item => {
-        exports.traversalTree(tree, item, criteria, callback);
+        traversalTree(tree, item, criteria, callback);
     });
-};
+}
+exports.traversalTree = traversalTree;
 /**
  * serializeTree
  * @param {*} tree

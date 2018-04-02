@@ -4,6 +4,8 @@
  * @param  boolean  vector If vector is true then sort asc else desc
  * @return function Compare function
  */
+import Tree from './tree';
+
 export let compareById = vector =>
 {
 	return (a, b) =>
@@ -55,7 +57,7 @@ export let removeEmptyChildren = (jTree, node = null, options) =>
  * @param {*} criteria
  * @param {*} options
  */
-export let searchNode = (tree, node, criteria, options?) =>
+export let searchNode = (tree, node, criteria: (parentNode) => boolean, options?) =>
 {
 	const currentNode = node || tree.rootNode
 	if (criteria(currentNode))
@@ -104,9 +106,9 @@ export let showTree = (tree, node = null, level = 1) =>
  * @param {*} criteria
  * @param {*} callback
  */
-export let traversalTree = (tree, node = null, criteria, callback) =>
+export function traversalTree(tree: Tree, node = null, criteria, callback: (currentNode) => void)
 {
-	const currentNode = node || tree.rootNode
+	const currentNode = node || tree.rootNode;
 	if (!node)
 	{
 		if (typeof criteria === 'function' && criteria(currentNode))
@@ -134,7 +136,10 @@ export let traversalTree = (tree, node = null, criteria, callback) =>
  * @param {*} target
  * @param {*} options
  */
-export let serializeTree = (tree, node = null, target = [], options) =>
+export let serializeTree = (tree, node = null, target = [], options: {
+	key_children?: string,
+	empty_children?: boolean,
+}) =>
 {
 	const { key_children } = options
 	node = node || tree.rootNode

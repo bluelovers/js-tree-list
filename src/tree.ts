@@ -9,7 +9,7 @@ import {
 export class Tree<T = any>
 {
 
-	rootNode: Node
+	rootNode: Node<T>;
 
 	constructor(object: T = undefined)
 	{
@@ -18,6 +18,11 @@ export class Tree<T = any>
 		{
 			this.rootNode = new Node(object)
 		}
+	}
+
+	root()
+	{
+		return this.rootNode;
 	}
 
 	// only for rootNode
@@ -32,6 +37,8 @@ export class Tree<T = any>
 		this.rootNode.set(path, value)
 	}
 
+	add(callback: (parentNode) => boolean, object)
+	add(callback: 'root', object)
 	add(callback, object)
 	{
 		const type = typeof callback
@@ -80,12 +87,12 @@ export class Tree<T = any>
 		return false
 	}
 
-	traversal(criteria, callback)
+	traversal(criteria, callback: (currentNode) => void)
 	{
 		traversalTree(this, null, criteria, callback)
 	}
 
-	sort(compare)
+	sort(compare: (a: T, b: T) => number)
 	{
 		this.traversal(null, currentNode =>
 		{
@@ -93,7 +100,10 @@ export class Tree<T = any>
 		})
 	}
 
-	toJson(options = {})
+	toJson(options: {
+		key_children?: string,
+		empty_children?: boolean,
+	} = {})
 	{
 		const optionsDefault = {
 			key_children: 'children',

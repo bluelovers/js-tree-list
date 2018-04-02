@@ -53,6 +53,7 @@ class ListToTree {
                 this.last(val[n][key_child], key_id, key_last, key_child);
             }
             if (val[n][key_last] !== 0) {
+                // @ts-ignore
                 if (((n - 1) >= 0 && val[n - 1][key_id] !== val[n][key_last]) || (n - 1) < 0) {
                     const tmp = val.splice(n, 1); // 从该元素位置删除元素并将已删除的元素放置于新数组(tmp)
                     val.splice(n + 1, 0, tmp[0]); // 在指定ID元素后面添加被删除的元素
@@ -72,4 +73,5 @@ class ListToTree {
         return json;
     }
 }
+exports.ListToTree = ListToTree;
 exports.default = ListToTree;

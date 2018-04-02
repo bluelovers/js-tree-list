@@ -9,6 +9,9 @@ class Tree {
             this.rootNode = new node_1.default(object);
         }
     }
+    root() {
+        return this.rootNode;
+    }
     // only for rootNode
     get(path) {
         return this.rootNode.get(path);

@@ -1,13 +1,17 @@
-export default class Node<T = any> {
+export declare class Node<T = any> {
     content: T;
     children: Node<T>[];
-    length: number;
     parent: Node<T>;
     constructor(content: any);
-    get(fieldKey: any): any;
-    set(fieldKey: any, value: any): boolean;
-    add(child: T | Node<T>): Node<T>;
-    remove(callback: any): Node<T>[];
+    valueOf<U extends T>(): U;
+    parents(): Node<T>[];
+    size(): number;
+    get<U>(fieldKey: string | number | symbol): U;
+    set(fieldKey: string | number | symbol, value: any): boolean;
+    readonly length: number;
+    add<U extends T>(child: U | Node<U>): Node<U>;
+    remove<U extends T>(callback: any): Node<U>[];
     sort(compare: any): Node<T>[];
     traversal(criteria: any, callback: any): void;
 }
+export default Node;

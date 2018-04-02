@@ -32,7 +32,7 @@ function sortBy(collection, propertyA, propertyB)
 	})
 }
 
-export default class ListToTree<T = any>
+export class ListToTree<T = any>
 {
 
 	options: {
@@ -95,6 +95,7 @@ export default class ListToTree<T = any>
 			}
 			if (val[n][key_last] !== 0)
 			{
+				// @ts-ignore
 				if (((n - 1) >= 0 && val[n - 1][key_id] !== val[n][key_last]) || (n - 1) < 0)
 				{
 					const tmp = val.splice(n, 1) // 从该元素位置删除元素并将已删除的元素放置于新数组(tmp)
@@ -120,3 +121,5 @@ export default class ListToTree<T = any>
 		return json
 	}
 }
+
+export default ListToTree

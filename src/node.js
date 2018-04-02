@@ -2,9 +2,26 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 class Node {
     constructor(content) {
-        this.content = content;
         this.children = [];
-        this.length = 0;
+        this.content = content;
+        //this.children = [];
+        //this.length = 0;
+    }
+    valueOf() {
+        return this.content;
+    }
+    parents() {
+        let ps = [];
+        let c = this;
+        while (c.parent) {
+            // @ts-ignore
+            c = c.parent;
+            ps.push(c);
+        }
+        return ps;
+    }
+    size() {
+        return this.length;
     }
     get(fieldKey) {
         if (typeof this.content[fieldKey] !== 'undefined') {
@@ -14,10 +31,12 @@ class Node {
     set(fieldKey, value) {
         return !!(this.content[fieldKey] = value);
     }
+    get length() {
+        return this.children.length;
+    }
     add(child) {
         const node = child instanceof Node ? child : new Node(child);
         node.parent = this;
-        this.length++;
         this.children.push(node);
         return node;
     }
@@ -25,7 +44,6 @@ class Node {
         const index = this.children.findIndex(callback);
         if (index > -1) {
             const removeItems = this.children.splice(index, 1);
-            this.length--;
             return removeItems;
         }
         return [];
@@ -38,4 +56,5 @@ class Node {
         this.children.filter(criteria).forEach(callback);
     }
 }
+exports.Node = Node;
 exports.default = Node;
