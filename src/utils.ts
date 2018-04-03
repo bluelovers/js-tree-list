@@ -5,6 +5,7 @@
  * @return function Compare function
  */
 import Tree from './tree';
+import * as _sortObjectKeys from 'sort-object-keys2';
 
 export let compareById = vector =>
 {
@@ -153,4 +154,20 @@ export let serializeTree = (tree, node = null, target = [], options: {
 		serializeTree(tree, item, target[index - 1][key_children], options)
 	})
 	return target
+}
+
+export function sortKeys<T>(data: T)
+{
+	return _sortObjectKeys(data, {
+			keys: [
+				'id',
+				'parent',
+				'uuid',
+				'level',
+				'content',
+				'children',
+			],
+			useSource: true,
+		})
+	;
 }

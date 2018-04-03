@@ -47,3 +47,4 @@ export declare let serializeTree: (tree: any, node: any, target: any[], options:
     key_children?: string;
     empty_children?: boolean;
 }) => any[];
+export declare function sortKeys<T>(data: T): T;

@@ -1,18 +1,26 @@
-export declare class Node<T = any> {
+export declare class TreeNode<T = any> {
     id?: string | number;
     content: T;
-    children: Node<T>[];
-    parent: Node<T>;
+    children: TreeNode<T>[];
+    parent: TreeNode<T>;
     constructor(content: any, mode?: boolean);
     valueOf<U extends T>(): U;
-    parents(): Node<T>[];
+    parents(): TreeNode<T>[];
     size(): number;
     get<U>(fieldKey: string | number | symbol): U;
     set(fieldKey: string | number | symbol, value: any): boolean;
     readonly length: number;
-    add<U extends T>(child: U | Node<U>, mode?: boolean): Node<U>;
-    remove<U extends T>(callback: any): Node<U>[];
-    sort(compare: any): Node<T>[];
+    add<U extends T>(child: U | TreeNode<U>, mode?: boolean): TreeNode<U>;
+    remove<U extends T>(callback: any): TreeNode<U>[];
+    sort(compare: any): TreeNode<T>[];
     traversal(criteria: any, callback: any): void;
+    toData(): this & {
+        parent: string | number;
+        children: any[];
+    };
+    toJSON(): this & {
+        parent: string | number;
+        children: any[];
+    };
 }
-export default Node;
+export default TreeNode;

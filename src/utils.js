@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const _sortObjectKeys = require("sort-object-keys2");
 exports.compareById = vector => {
     return (a, b) => {
         const aid = Number(a.get('id'));
@@ -115,3 +116,17 @@ exports.serializeTree = (tree, node = null, target = [], options) => {
     });
     return target;
 };
+function sortKeys(data) {
+    return _sortObjectKeys(data, {
+        keys: [
+            'id',
+            'parent',
+            'uuid',
+            'level',
+            'content',
+            'children',
+        ],
+        useSource: true,
+    });
+}
+exports.sortKeys = sortKeys;

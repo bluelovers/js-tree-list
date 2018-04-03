@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const node_1 = require("./node");
 const utils_1 = require("./utils");
+// @ts-ignore
 const util_1 = require("util");
 class Tree {
     constructor(object = undefined, mode) {

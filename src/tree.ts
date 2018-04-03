@@ -1,4 +1,4 @@
-import Node from './node'
+import TreeNode from './node'
 import {
 	searchNode,
 	traversalTree,
@@ -6,18 +6,19 @@ import {
 	removeEmptyChildren
 } from './utils'
 
+// @ts-ignore
 import { inspect } from 'util';
 
 export class Tree<T = any>
 {
-	rootNode: Node<T>;
+	rootNode: TreeNode<T>;
 
 	constructor(object: T = undefined, mode?: boolean)
 	{
 		this.rootNode = null
 		if (object)
 		{
-			this.rootNode = new Node(object, mode)
+			this.rootNode = new TreeNode(object, mode)
 		}
 	}
 
@@ -45,7 +46,7 @@ export class Tree<T = any>
 		const type = typeof callback
 		if (type === 'string' && callback === 'root')
 		{
-			this.rootNode = new Node(object, mode)
+			this.rootNode = new TreeNode(object, mode)
 			return this.rootNode
 		}
 		else if (type === 'function')

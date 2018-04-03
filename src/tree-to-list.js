@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const utils_1 = require("./utils");
 function TreeToList(tree) {
     let list = [];
     let pnode = tree.root();
@@ -9,6 +10,7 @@ function TreeToList(tree) {
             parent: (pnode.parent ? pnode.parent.id : null),
         });
         delete item.children;
+        item = utils_1.sortKeys(item);
         list.push(item);
         return pnode;
     }

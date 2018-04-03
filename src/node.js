@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const shortid = require("shortid");
-class Node {
+const utils_1 = require("./utils");
+class TreeNode {
     constructor(content, mode) {
         this.children = [];
         this.id = shortid();
@@ -14,6 +15,7 @@ class Node {
         this.parent = null;
         this.children = [];
         //this.length = 0;
+        utils_1.sortKeys(this);
     }
     valueOf() {
         return this.content;
@@ -43,7 +45,7 @@ class Node {
         return this.children.length;
     }
     add(child, mode) {
-        const node = child instanceof Node ? child : new Node(child, mode);
+        const node = child instanceof TreeNode ? child : new TreeNode(child, mode);
         node.parent = this;
         this.children.push(node);
         return node;
@@ -63,6 +65,21 @@ class Node {
         criteria = criteria || (() => true);
         this.children.filter(criteria).forEach(callback);
     }
+    toData() {
+        let pnode = this;
+        let data = Object.assign({}, pnode, {
+            parent: (pnode.parent ? pnode.parent.id : null),
+            children: [],
+        });
+        data.children = pnode.children.reduce(function (a, node) {
+            a.push(node.toJSON());
+            return a;
+        }, []);
+        return utils_1.sortKeys(data);
+    }
+    toJSON() {
+        return this.toData();
+    }
 }
-exports.Node = Node;
-exports.default = Node;
+exports.TreeNode = TreeNode;
+exports.default = TreeNode;

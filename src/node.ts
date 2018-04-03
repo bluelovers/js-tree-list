@@ -1,14 +1,16 @@
 import * as shortid from 'shortid';
+import sortObjectKeys from 'sort-object-keys2';
+import { sortKeys } from './utils';
 
-export class Node<T = any>
+export class TreeNode<T = any>
 {
 	id?: string | number;
 
 	content: T;
-	children: Node<T>[] = [];
+	children: TreeNode<T>[] = [];
 	//length: number;
 
-	parent: Node<T>;
+	parent: TreeNode<T>;
 
 	constructor(content, mode?: boolean)
 	{
@@ -26,6 +28,8 @@ export class Node<T = any>
 		this.parent = null;
 		this.children = [];
 		//this.length = 0;
+
+		sortKeys(this)
 	}
 
 	public valueOf<U extends T>(): U
@@ -33,7 +37,7 @@ export class Node<T = any>
 		return this.content as U;
 	}
 
-	parents(): Node<T>[]
+	parents(): TreeNode<T>[]
 	{
 		let ps = [];
 		let c = this;
@@ -69,20 +73,20 @@ export class Node<T = any>
 		return this.children.length;
 	}
 
-	add<U extends T>(child: U | Node<U>, mode?: boolean): Node<U>
+	add<U extends T>(child: U | TreeNode<U>, mode?: boolean): TreeNode<U>
 	{
-		const node = child instanceof Node ? child : new Node(child, mode);
+		const node = child instanceof TreeNode ? child : new TreeNode(child, mode);
 		node.parent = this;
 		this.children.push(node);
 		return node
 	}
 
-	remove<U extends T>(callback): Node<U>[]
+	remove<U extends T>(callback): TreeNode<U>[]
 	{
 		const index = this.children.findIndex(callback)
 		if (index > -1)
 		{
-			const removeItems = this.children.splice(index, 1) as Node<U>[];
+			const removeItems = this.children.splice(index, 1) as TreeNode<U>[];
 			return removeItems
 		}
 		return []
@@ -98,6 +102,29 @@ export class Node<T = any>
 		criteria = criteria || (() => true)
 		this.children.filter(criteria).forEach(callback)
 	}
+
+	toData()
+	{
+		let pnode = this;
+
+		let data = Object.assign({}, pnode, {
+			parent: (pnode.parent ? pnode.parent.id : null),
+			children: [],
+		});
+
+		data.children = pnode.children.reduce(function (a, node)
+		{
+			a.push(node.toJSON());
+			return a;
+		}, []);
+
+		return sortKeys(data);
+	}
+
+	toJSON()
+	{
+		return this.toData();
+	}
 }
 
-export default Node
+export default TreeNode

@@ -2,6 +2,7 @@
  * Created by user on 2018/4/3/003.
  */
 import Tree from './tree';
+import { sortKeys } from './utils';
 
 export function TreeToList(tree: Tree)
 {
@@ -18,6 +19,8 @@ export function TreeToList(tree: Tree)
 		});
 
 		delete item.children;
+
+		item = sortKeys(item);
 
 		list.push(item);
 

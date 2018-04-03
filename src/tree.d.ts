@@ -1,8 +1,8 @@
-import Node from './node';
+import TreeNode from './node';
 export declare class Tree<T = any> {
-    rootNode: Node<T>;
+    rootNode: TreeNode<T>;
     constructor(object?: T, mode?: boolean);
-    root(): Node<T>;
+    root(): TreeNode<T>;
     get(path: any): {};
     set(path: any, value: any): void;
     add(callback: (parentNode) => boolean, object: any, mode?: boolean): any;

@@ -1,5 +1,5 @@
-import Node from './node';
 import LTT from './tree'
+// @ts-ignore
 import { inspect } from 'util';
 
 const defaultOptions = {
@@ -76,10 +76,9 @@ export class ListToTree<T = any>
 			{
 				if (item[key_parent])
 				{
-					throw new RangeError(`the first elem is root, should not have parent. ` +  + inspect(object));
+					throw new RangeError(`the first elem is root, should not have parent. ` +  + inspect(item));
 				}
 
-				//tree.rootNode = new Node(item, true);
 				tree.add('root', item, true);
 			}
 			else
