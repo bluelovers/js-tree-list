@@ -1,15 +1,30 @@
+import * as shortid from 'shortid';
+
 export class Node<T = any>
 {
+	id?: string | number;
+
 	content: T;
 	children: Node<T>[] = [];
 	//length: number;
 
 	parent: Node<T>;
 
-	constructor(content)
+	constructor(content, mode?: boolean)
 	{
-		this.content = content;
-		//this.children = [];
+		this.id = shortid();
+
+		if (mode)
+		{
+			Object.assign(this, content);
+		}
+		else
+		{
+			this.content = content;
+		}
+
+		this.parent = null;
+		this.children = [];
 		//this.length = 0;
 	}
 
@@ -54,9 +69,9 @@ export class Node<T = any>
 		return this.children.length;
 	}
 
-	add<U extends T>(child: U | Node<U>): Node<U>
+	add<U extends T>(child: U | Node<U>, mode?: boolean): Node<U>
 	{
-		const node = child instanceof Node ? child : new Node(child);
+		const node = child instanceof Node ? child : new Node(child, mode);
 		node.parent = this;
 		this.children.push(node);
 		return node

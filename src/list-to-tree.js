@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const tree_1 = require("./tree");
+const util_1 = require("util");
 const defaultOptions = {
     key_id: 'id',
     key_parent: 'parent',
@@ -32,15 +33,23 @@ class ListToTree {
         this.options = options;
         const { key_id, key_parent, uuid } = options;
         if (uuid === false) {
-            sortBy(_list, key_parent, key_id);
+            //sortBy(_list, key_parent, key_id)
         }
-        const tree = new tree_1.default({
-            [key_id]: 0
-        });
+        const tree = new tree_1.default();
         _list.forEach((item, index) => {
-            tree.add(parentNode => {
-                return parentNode.get(key_id) === item[key_parent];
-            }, item);
+            if (tree.rootNode === null) {
+                if (item[key_parent]) {
+                    throw new RangeError(`the first elem is root, should not have parent. ` + +util_1.inspect(object));
+                }
+                //tree.rootNode = new Node(item, true);
+                tree.add('root', item, true);
+            }
+            else {
+                let node = tree.add(parentNode => {
+                    //return parentNode.get(key_id) === item[key_parent]
+                    return parentNode[key_id] === item[key_parent];
+                }, item, true);
+            }
         });
         this.tree = tree;
     }

@@ -1,10 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const shortid = require("shortid");
 class Node {
-    constructor(content) {
+    constructor(content, mode) {
         this.children = [];
-        this.content = content;
-        //this.children = [];
+        this.id = shortid();
+        if (mode) {
+            Object.assign(this, content);
+        }
+        else {
+            this.content = content;
+        }
+        this.parent = null;
+        this.children = [];
         //this.length = 0;
     }
     valueOf() {
@@ -34,8 +42,8 @@ class Node {
     get length() {
         return this.children.length;
     }
-    add(child) {
-        const node = child instanceof Node ? child : new Node(child);
+    add(child, mode) {
+        const node = child instanceof Node ? child : new Node(child, mode);
         node.parent = this;
         this.children.push(node);
         return node;

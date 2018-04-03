@@ -3,17 +3,20 @@
   "version": "1.1.14",
   "description": "Convert list to tree, managing a tree and its nodes.",
   "keywords": [
+    "data",
     "js list tree",
+    "json",
+    "list",
     "list to tree",
     "tree"
   ],
-  "homepage": "https://github.com/yi-ge/js-tree-list#readme",
+  "homepage": "https://github.com/bluelovers/js-tree-list#readme",
   "bugs": {
-    "url": "https://github.com/yi-ge/js-tree-list/issues"
+    "url": "https://github.com/bluelovers/js-tree-list/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/yi-ge/js-tree-list.git"
+    "url": "git+https://github.com/bluelovers/js-tree-list.git"
   },
   "license": "MIT",
   "author": "",
@@ -23,6 +26,9 @@
   },
   "scripts": {
     "test": "npm run unit"
+  },
+  "dependencies": {
+    "shortid": "^2.2.8"
   },
   "devDependencies": {
     "uuid": "^3.2.1"

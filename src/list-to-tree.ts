@@ -1,4 +1,6 @@
+import Node from './node';
 import LTT from './tree'
+import { inspect } from 'util';
 
 const defaultOptions = {
 	key_id: 'id',
@@ -63,18 +65,31 @@ export class ListToTree<T = any>
 
 		if (uuid === false)
 		{
-			sortBy(_list, key_parent, key_id)
+			//sortBy(_list, key_parent, key_id)
 		}
 
-		const tree = new LTT({
-			[key_id]: 0
-		})
+		const tree = new LTT()
+
 		_list.forEach((item, index) =>
 		{
-			tree.add(parentNode =>
+			if (tree.rootNode === null)
 			{
-				return parentNode.get(key_id) === item[key_parent]
-			}, item)
+				if (item[key_parent])
+				{
+					throw new RangeError(`the first elem is root, should not have parent. ` +  + inspect(object));
+				}
+
+				//tree.rootNode = new Node(item, true);
+				tree.add('root', item, true);
+			}
+			else
+			{
+				let node = tree.add(parentNode =>
+				{
+					//return parentNode.get(key_id) === item[key_parent]
+					return parentNode[key_id] === item[key_parent]
+				}, item, true);
+			}
 		})
 
 		this.tree = tree

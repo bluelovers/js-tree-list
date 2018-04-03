@@ -2,11 +2,12 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const node_1 = require("./node");
 const utils_1 = require("./utils");
+const util_1 = require("util");
 class Tree {
-    constructor(object = undefined) {
+    constructor(object = undefined, mode) {
         this.rootNode = null;
         if (object) {
-            this.rootNode = new node_1.default(object);
+            this.rootNode = new node_1.default(object, mode);
         }
     }
     root() {
@@ -20,20 +21,22 @@ class Tree {
     set(path, value) {
         this.rootNode.set(path, value);
     }
-    add(callback, object) {
+    add(callback, object, mode) {
         const type = typeof callback;
         if (type === 'string' && callback === 'root') {
-            this.rootNode = new node_1.default(object);
-            return this;
+            this.rootNode = new node_1.default(object, mode);
+            return this.rootNode;
         }
         else if (type === 'function') {
             const target = utils_1.searchNode(this, null, callback);
-            if (target && target.add(object)) {
-                return this;
+            if (target) {
+                let node = target.add(object, mode);
+                if (node) {
+                    return node;
+                }
             }
-            else {
-                console.log('Warning', object);
-            }
+            console.log('Warning', object);
+            throw new Error('Warning ' + util_1.inspect(object));
         }
     }
     contains(criteria) {

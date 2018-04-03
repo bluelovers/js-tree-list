@@ -6,5 +6,7 @@ const tree_1 = require("./tree");
 exports.Tree = tree_1.default;
 const node_1 = require("./node");
 exports.Node = node_1.default;
+const tree_to_list_1 = require("./tree-to-list");
+exports.TreeToList = tree_to_list_1.default;
 const self = require("./index");
 exports.default = self;

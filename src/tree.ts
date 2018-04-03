@@ -6,17 +6,18 @@ import {
 	removeEmptyChildren
 } from './utils'
 
+import { inspect } from 'util';
+
 export class Tree<T = any>
 {
-
 	rootNode: Node<T>;
 
-	constructor(object: T = undefined)
+	constructor(object: T = undefined, mode?: boolean)
 	{
 		this.rootNode = null
 		if (object)
 		{
-			this.rootNode = new Node(object)
+			this.rootNode = new Node(object, mode)
 		}
 	}
 
@@ -37,27 +38,31 @@ export class Tree<T = any>
 		this.rootNode.set(path, value)
 	}
 
-	add(callback: (parentNode) => boolean, object)
-	add(callback: 'root', object)
-	add(callback, object)
+	add(callback: (parentNode) => boolean, object, mode?: boolean)
+	add(callback: 'root', object, mode?: boolean)
+	add(callback, object, mode?: boolean)
 	{
 		const type = typeof callback
 		if (type === 'string' && callback === 'root')
 		{
-			this.rootNode = new Node(object)
-			return this
+			this.rootNode = new Node(object, mode)
+			return this.rootNode
 		}
 		else if (type === 'function')
 		{
 			const target = searchNode(this, null, callback)
-			if (target && target.add(object))
+
+			if (target)
 			{
-				return this
+				let node = target.add(object, mode);
+				if (node)
+				{
+					return node;
+				}
 			}
-			else
-			{
-				console.log('Warning', object)
-			}
+
+			console.log('Warning', object)
+			throw new Error('Warning ' + inspect(object));
 		}
 	}
 

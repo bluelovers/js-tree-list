@@ -1,6 +1,7 @@
 import ListToTree from './list-to-tree';
 import Tree from './tree';
 import Node from './node';
-export { ListToTree, Tree, Node };
+import TreeToList from './tree-to-list';
+export { ListToTree, Tree, Node, TreeToList };
 import * as self from './index';
 export default self;
