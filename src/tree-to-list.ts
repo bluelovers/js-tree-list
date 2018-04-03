@@ -5,7 +5,12 @@ import TreeNode from './node';
 import Tree from './tree';
 import { sortKeys, SYMBOL_OPTIONS } from './utils';
 
-export function TreeToList(tree: Tree)
+export function TreeToList<T extends {}, U = any>(tree: Tree): Array<{
+	id?: string | number,
+	parent?: string | number,
+	uuid?: string,
+	content: U,
+} & T>
 {
 	let list = [];
 
@@ -24,7 +29,7 @@ export function TreeToList(tree: Tree)
 			parent: (pnode.parent ? pnode.parent.id : null),
 		}) as any as {
 			[K in keyof J]: J[K];
-		};
+			};
 
 		delete item.children;
 		delete item[SYMBOL_OPTIONS];
