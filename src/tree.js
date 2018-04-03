@@ -5,11 +5,24 @@ const utils_1 = require("./utils");
 // @ts-ignore
 const util_1 = require("util");
 class Tree {
-    constructor(object = undefined, mode) {
+    constructor(object = undefined, mode, options = {}) {
+        this.options = {
+            libTreeNode: node_1.default,
+        };
+        Object.assign(this.options, options);
         this.rootNode = null;
         if (object) {
-            this.rootNode = new node_1.default(object, mode);
+            this.rootNode = this.createNode(object, mode);
         }
+    }
+    createNode(object, mode) {
+        let libTreeNode = this.options.libTreeNode;
+        let node = new libTreeNode(object, mode);
+        node[utils_1.SYMBOL_OPTIONS] = {
+            tree: this,
+            options: this.options,
+        };
+        return node;
     }
     root() {
         return this.rootNode;
@@ -25,7 +38,7 @@ class Tree {
     add(callback, object, mode) {
         const type = typeof callback;
         if (type === 'string' && callback === 'root') {
-            this.rootNode = new node_1.default(object, mode);
+            this.rootNode = this.createNode(object, mode);
             return this.rootNode;
         }
         else if (type === 'function') {

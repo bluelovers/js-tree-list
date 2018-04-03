@@ -1,8 +1,9 @@
+import TreeNode from './node';
 /**
  * Created by user on 2018/4/3/003.
  */
 import Tree from './tree';
-import { sortKeys } from './utils';
+import { sortKeys, SYMBOL_OPTIONS } from './utils';
 
 export function TreeToList(tree: Tree)
 {
@@ -12,13 +13,21 @@ export function TreeToList(tree: Tree)
 
 	_loop(pnode, 0);
 
-	function _node(pnode, level: number)
+	function _node<J extends TreeNode>(pnode: J, level: number)
 	{
-		let item = Object.assign({}, pnode, {
+		let item = Object.assign({}, Object.keys(pnode)
+			.reduce(function (item, key)
+			{
+				item[key] = pnode[key];
+				return item;
+			}, {}), {
 			parent: (pnode.parent ? pnode.parent.id : null),
-		});
+		}) as any as {
+			[K in keyof J]: J[K];
+		};
 
 		delete item.children;
+		delete item[SYMBOL_OPTIONS];
 
 		item = sortKeys(item);
 

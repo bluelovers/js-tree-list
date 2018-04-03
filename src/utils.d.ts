@@ -5,6 +5,7 @@
  * @return function Compare function
  */
 import Tree from './tree';
+export declare const SYMBOL_OPTIONS: symbol;
 export declare let compareById: (vector: any) => (a: any, b: any) => 1 | 0 | -1;
 /**
  * remove-empty-children (for json tree)

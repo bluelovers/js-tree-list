@@ -4,7 +4,9 @@ export declare class TreeNode<T = any> {
     children: TreeNode<T>[];
     parent: TreeNode<T>;
     constructor(content: any, mode?: boolean);
-    valueOf<U extends T>(): U;
+    createNode<U extends TreeNode<T>>(object: any, mode?: boolean): U;
+    key(): string | number;
+    value<U extends T>(): U;
     parents(): TreeNode<T>[];
     size(): number;
     get<U>(fieldKey: string | number | symbol): U;

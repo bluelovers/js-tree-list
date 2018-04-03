@@ -3,23 +3,47 @@ import {
 	searchNode,
 	traversalTree,
 	serializeTree,
-	removeEmptyChildren
+	removeEmptyChildren, SYMBOL_OPTIONS
 } from './utils'
 
 // @ts-ignore
 import { inspect } from 'util';
 
+export type ITreeOptions = {
+	libTreeNode?: typeof TreeNode,
+}
+
 export class Tree<T = any>
 {
 	rootNode: TreeNode<T>;
 
-	constructor(object: T = undefined, mode?: boolean)
+	options: ITreeOptions = {
+		libTreeNode: TreeNode,
+	};
+
+	constructor(object: T = undefined, mode?: boolean, options: ITreeOptions = {})
 	{
+		Object.assign(this.options, options);
+
 		this.rootNode = null
 		if (object)
 		{
-			this.rootNode = new TreeNode(object, mode)
+			this.rootNode = this.createNode(object, mode);
 		}
+	}
+
+	createNode<T>(object: T, mode?: boolean)
+	{
+		let libTreeNode = this.options.libTreeNode;
+
+		let node = new libTreeNode<T>(object, mode);
+
+		node[SYMBOL_OPTIONS] = {
+			tree: this,
+			options: this.options,
+		};
+
+		return node;
 	}
 
 	root()
@@ -46,7 +70,7 @@ export class Tree<T = any>
 		const type = typeof callback
 		if (type === 'string' && callback === 'root')
 		{
-			this.rootNode = new TreeNode(object, mode)
+			this.rootNode = this.createNode(object, mode)
 			return this.rootNode
 		}
 		else if (type === 'function')

@@ -1,6 +1,7 @@
 import * as shortid from 'shortid';
 import sortObjectKeys from 'sort-object-keys2';
-import { sortKeys } from './utils';
+import { ITreeOptions } from './tree';
+import { sortKeys, SYMBOL_OPTIONS } from './utils';
 
 export class TreeNode<T = any>
 {
@@ -32,7 +33,45 @@ export class TreeNode<T = any>
 		sortKeys(this)
 	}
 
-	public valueOf<U extends T>(): U
+	createNode<U extends TreeNode<T>>(object, mode?: boolean): U
+	{
+		let options: ITreeOptions;
+		let libTreeNode: typeof TreeNode;
+
+		if (this[SYMBOL_OPTIONS])
+		{
+			let s = this[SYMBOL_OPTIONS];
+
+			if (s.root)
+			{
+				options = s.root.options;
+			}
+			else
+			{
+				options = s.options;
+			}
+
+			libTreeNode = options.libTreeNode;
+
+			let node = new libTreeNode(object, mode);
+
+			node[SYMBOL_OPTIONS] = s;
+
+			return node as U;
+		}
+
+		libTreeNode = TreeNode;
+
+		let node = new libTreeNode(object, mode);
+		return node as U;
+	}
+
+	public key()
+	{
+		return this.id;
+	}
+
+	public value<U extends T>(): U
 	{
 		return this.content as U;
 	}
@@ -75,10 +114,10 @@ export class TreeNode<T = any>
 
 	add<U extends T>(child: U | TreeNode<U>, mode?: boolean): TreeNode<U>
 	{
-		const node = child instanceof TreeNode ? child : new TreeNode(child, mode);
+		const node = child instanceof TreeNode ? child : this.createNode(child, mode);
 		node.parent = this;
 		this.children.push(node);
-		return node
+		return node as TreeNode<U>
 	}
 
 	remove<U extends T>(callback): TreeNode<U>[]
@@ -111,6 +150,8 @@ export class TreeNode<T = any>
 			parent: (pnode.parent ? pnode.parent.id : null),
 			children: [],
 		});
+
+		//delete data[SYMBOL_OPTIONS];
 
 		data.children = pnode.children.reduce(function (a, node)
 		{

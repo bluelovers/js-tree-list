@@ -6,10 +6,15 @@ function TreeToList(tree) {
     let pnode = tree.root();
     _loop(pnode, 0);
     function _node(pnode, level) {
-        let item = Object.assign({}, pnode, {
+        let item = Object.assign({}, Object.keys(pnode)
+            .reduce(function (item, key) {
+            item[key] = pnode[key];
+            return item;
+        }, {}), {
             parent: (pnode.parent ? pnode.parent.id : null),
         });
         delete item.children;
+        delete item[utils_1.SYMBOL_OPTIONS];
         item = utils_1.sortKeys(item);
         list.push(item);
         return pnode;

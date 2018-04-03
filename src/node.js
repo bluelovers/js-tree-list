@@ -17,7 +17,30 @@ class TreeNode {
         //this.length = 0;
         utils_1.sortKeys(this);
     }
-    valueOf() {
+    createNode(object, mode) {
+        let options;
+        let libTreeNode;
+        if (this[utils_1.SYMBOL_OPTIONS]) {
+            let s = this[utils_1.SYMBOL_OPTIONS];
+            if (s.root) {
+                options = s.root.options;
+            }
+            else {
+                options = s.options;
+            }
+            libTreeNode = options.libTreeNode;
+            let node = new libTreeNode(object, mode);
+            node[utils_1.SYMBOL_OPTIONS] = s;
+            return node;
+        }
+        libTreeNode = TreeNode;
+        let node = new libTreeNode(object, mode);
+        return node;
+    }
+    key() {
+        return this.id;
+    }
+    value() {
         return this.content;
     }
     parents() {
@@ -45,7 +68,7 @@ class TreeNode {
         return this.children.length;
     }
     add(child, mode) {
-        const node = child instanceof TreeNode ? child : new TreeNode(child, mode);
+        const node = child instanceof TreeNode ? child : this.createNode(child, mode);
         node.parent = this;
         this.children.push(node);
         return node;
@@ -71,6 +94,7 @@ class TreeNode {
             parent: (pnode.parent ? pnode.parent.id : null),
             children: [],
         });
+        //delete data[SYMBOL_OPTIONS];
         data.children = pnode.children.reduce(function (a, node) {
             a.push(node.toJSON());
             return a;

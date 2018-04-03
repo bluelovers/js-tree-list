@@ -1,7 +1,12 @@
 import TreeNode from './node';
+export declare type ITreeOptions = {
+    libTreeNode?: typeof TreeNode;
+};
 export declare class Tree<T = any> {
     rootNode: TreeNode<T>;
-    constructor(object?: T, mode?: boolean);
+    options: ITreeOptions;
+    constructor(object?: T, mode?: boolean, options?: ITreeOptions);
+    createNode<T>(object: T, mode?: boolean): TreeNode<T>;
     root(): TreeNode<T>;
     get(path: any): {};
     set(path: any, value: any): void;

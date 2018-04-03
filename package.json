@@ -4,10 +4,17 @@
   "description": "Convert list to tree, managing a tree and its nodes.",
   "keywords": [
     "data",
+    "data structures",
+    "data structures javascript",
+    "data structures js",
+    "es6 data structures",
+    "javascript data structures",
     "js list tree",
     "json",
     "list",
     "list to tree",
+    "node",
+    "query",
     "tree"
   ],
   "homepage": "https://github.com/bluelovers/js-tree-list#readme",
