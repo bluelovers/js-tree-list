@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const utils_1 = require("./utils");
-function TreeToList(tree) {
+function TreeToList(tree, linkNode) {
     let list = [];
     let pnode = tree.root();
     _loop(pnode, 0);
@@ -13,6 +13,9 @@ function TreeToList(tree) {
         }, {}), {
             parent: (pnode.parent ? pnode.parent.id : null),
         });
+        if (linkNode) {
+            item[utils_1.SYMBOL_NODE] = pnode;
+        }
         delete item.children;
         delete item[utils_1.SYMBOL_OPTIONS];
         item = utils_1.sortKeys(item);

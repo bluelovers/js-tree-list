@@ -17,6 +17,10 @@ export declare class Tree<T = any> {
     move(search: any, destination: any): boolean;
     traversal(criteria: any, callback: (currentNode) => void): void;
     sort(compare: (a: T, b: T) => number): void;
+    toJSON(...argv: any[]): TreeNode<T> & {
+        parent: string | number;
+        children: any[];
+    };
     toJson(options?: {
         key_children?: string;
         empty_children?: boolean;

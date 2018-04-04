@@ -159,6 +159,11 @@ export class TreeNode<T = any>
 			return a;
 		}, []);
 
+		if (data.children.length === 0)
+		{
+			delete data.children;
+		}
+
 		return sortKeys(data);
 	}
 

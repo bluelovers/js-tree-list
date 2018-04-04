@@ -130,6 +130,11 @@ export class Tree<T = any>
 		})
 	}
 
+	toJSON(...argv)
+	{
+		return this.root().toJSON();
+	}
+
 	toJson(options: {
 		key_children?: string,
 		empty_children?: boolean,

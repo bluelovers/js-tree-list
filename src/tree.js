@@ -79,6 +79,9 @@ class Tree {
             currentNode.sort(compare);
         });
     }
+    toJSON(...argv) {
+        return this.root().toJSON();
+    }
     toJson(options = {}) {
         const optionsDefault = {
             key_children: 'children',

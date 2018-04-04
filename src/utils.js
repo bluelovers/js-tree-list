@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const _sortObjectKeys = require("sort-object-keys2");
 exports.SYMBOL_OPTIONS = Symbol('options');
+exports.SYMBOL_NODE = Symbol('node');
 exports.compareById = vector => {
     return (a, b) => {
         const aid = Number(a.get('id'));

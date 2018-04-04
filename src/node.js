@@ -99,6 +99,9 @@ class TreeNode {
             a.push(node.toJSON());
             return a;
         }, []);
+        if (data.children.length === 0) {
+            delete data.children;
+        }
         return utils_1.sortKeys(data);
     }
     toJSON() {

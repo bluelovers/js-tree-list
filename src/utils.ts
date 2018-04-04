@@ -8,6 +8,7 @@ import Tree from './tree';
 import * as _sortObjectKeys from 'sort-object-keys2';
 
 export const SYMBOL_OPTIONS = Symbol('options');
+export const SYMBOL_NODE = Symbol('node');
 
 export let compareById = vector =>
 {
