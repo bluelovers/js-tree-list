@@ -5,9 +5,9 @@
  * @return function Compare function
  */
 import Tree from './tree';
-export declare const SYMBOL_OPTIONS: symbol;
-export declare const SYMBOL_NODE: symbol;
-export declare let compareById: (vector: any) => (a: any, b: any) => 0 | 1 | -1;
+export declare const SYMBOL_OPTIONS: unique symbol;
+export declare const SYMBOL_NODE: unique symbol;
+export declare let compareById: (vector: any) => (a: any, b: any) => 1 | 0 | -1;
 /**
  * remove-empty-children (for json tree)
  * @param {*} jTree

@@ -7,10 +7,13 @@ function __export(m) {
 }
 Object.defineProperty(exports, "__esModule", { value: true });
 __export(require("./src"));
+const tree_to_list_1 = require("./src/tree-to-list");
+exports.TreeToList = tree_to_list_1.default;
 const src_1 = require("./src");
 exports.ListToTree = src_1.ListToTree;
-exports.TreeToList = src_1.TreeToList;
-exports.Tree = src_1.Tree;
+exports.Tree = 
+//TreeToList,
+src_1.Tree;
 exports.Node = src_1.Node;
 const self = require("./index");
 exports.default = self;

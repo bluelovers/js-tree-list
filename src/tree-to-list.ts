@@ -5,6 +5,13 @@ import TreeNode from './node';
 import Tree from './tree';
 import { sortKeys, SYMBOL_OPTIONS, SYMBOL_NODE } from './utils';
 
+export type ITreeToList<T extends {}, U = any> = Array<{
+	id?: string | number,
+	parent?: string | number,
+	uuid?: string,
+	content: U,
+} & T>;
+
 export function TreeToList<T extends {}, U = any>(tree: Tree, linkNode?: boolean): Array<{
 	id?: string | number,
 	parent?: string | number,

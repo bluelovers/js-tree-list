@@ -3,17 +3,19 @@
  */
 
 export * from './src';
+import TreeToList, { ITreeToList } from './src/tree-to-list'
+
+export { TreeToList, ITreeToList }
 
 import {
 	ListToTree,
-	TreeToList,
+	//TreeToList,
 	Tree,
 	Node,
 } from './src';
 
 export {
 	ListToTree,
-	TreeToList,
 	Tree,
 	Node,
 }

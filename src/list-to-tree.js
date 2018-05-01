@@ -58,7 +58,7 @@ class ListToTree {
     }
     last(val, key_id, key_last, key_child) {
         for (let n in val) {
-            if (val[n][key_child] && val[n][key_child].length) {
+            if (val[n][key_child] && val[n][key_child].length) { // 如果有子元素，则先对子元素进行处理
                 this.last(val[n][key_child], key_id, key_last, key_child);
             }
             if (val[n][key_last] !== 0) {
