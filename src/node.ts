@@ -1,9 +1,11 @@
-import * as shortid from 'shortid';
+import shortid = require('shortid');
 import sortObjectKeys from 'sort-object-keys2';
-import { ITreeOptions } from './tree';
+import Tree, { ITreeOptions } from './tree';
 import { sortKeys, SYMBOL_OPTIONS } from './utils';
 
-export class TreeNode<T = any>
+export type IFieldKey = string | number | symbol;
+
+export class TreeNode<T extends any = any>
 {
 	id?: string | number;
 
@@ -12,6 +14,8 @@ export class TreeNode<T = any>
 	//length: number;
 
 	parent: TreeNode<T>;
+
+	[SYMBOL_OPTIONS]?;
 
 	constructor(content, mode?: boolean)
 	{
@@ -94,7 +98,7 @@ export class TreeNode<T = any>
 		return this.length;
 	}
 
-	get<U>(fieldKey: string | number | symbol): U
+	get<U extends unknown>(fieldKey: IFieldKey): U
 	{
 		if (typeof this.content[fieldKey] !== 'undefined')
 		{
@@ -102,7 +106,7 @@ export class TreeNode<T = any>
 		}
 	}
 
-	set(fieldKey: string | number | symbol, value)
+	set(fieldKey: IFieldKey, value)
 	{
 		return !!(this.content[fieldKey] = value)
 	}

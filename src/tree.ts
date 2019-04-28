@@ -1,4 +1,4 @@
-import TreeNode from './node'
+import TreeNode, { IFieldKey } from './node'
 import {
 	searchNode,
 	traversalTree,
@@ -13,7 +13,13 @@ export type ITreeOptions = {
 	libTreeNode?: typeof TreeNode,
 }
 
-export class Tree<T = any>
+export interface ITreeToJsonOptions
+{
+	key_children: string,
+	empty_children?: boolean,
+}
+
+export class Tree<T extends any = any>
 {
 	rootNode: TreeNode<T>;
 
@@ -52,15 +58,15 @@ export class Tree<T = any>
 	}
 
 	// only for rootNode
-	get(path)
+	get<TT extends unknown>(path: IFieldKey)
 	{
-		return this.rootNode.get(path)
+		return this.rootNode.get<TT>(path)
 	}
 
 	// only for rootNode
-	set(path, value)
+	set(path: IFieldKey, value)
 	{
-		this.rootNode.set(path, value)
+		return this.rootNode.set(path, value)
 	}
 
 	add(callback: (parentNode) => boolean, object, mode?: boolean)
@@ -128,6 +134,8 @@ export class Tree<T = any>
 		{
 			currentNode.sort(compare)
 		})
+
+		return this;
 	}
 
 	toJSON(...argv)
@@ -135,21 +143,18 @@ export class Tree<T = any>
 		return this.root().toJSON();
 	}
 
-	toJson(options: {
-		key_children?: string,
-		empty_children?: boolean,
-	} = {})
+	toJson(options: Partial<ITreeToJsonOptions> = {})
 	{
-		const optionsDefault = {
+		const optionsDefault: ITreeToJsonOptions = {
 			key_children: 'children',
 			empty_children: true
 		}
-		options = Object.assign(optionsDefault, options)
-		const result = serializeTree(this, null, [], options)
+		let opts = Object.assign(optionsDefault, options)
+		const result = serializeTree(this, null, [], opts)
 
 		if (!options.empty_children)
 		{
-			removeEmptyChildren(result, null, options)
+			removeEmptyChildren(result, null, opts)
 		}
 
 		if (result && result.length > 0)
@@ -158,7 +163,7 @@ export class Tree<T = any>
 		}
 		else
 		{
-			return []
+			return [] as T[]
 		}
 	}
 }

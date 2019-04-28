@@ -36,3 +36,6 @@ test
 .gitkeep
 
 /.*
+*.ts
+!*.d.ts
+*.tgz

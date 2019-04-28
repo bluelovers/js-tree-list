@@ -4,17 +4,18 @@
  * @param  boolean  vector If vector is true then sort asc else desc
  * @return function Compare function
  */
-import Tree from './tree';
+import Tree, { ITreeToJsonOptions } from './tree';
+import TreeNode from './node';
 export declare const SYMBOL_OPTIONS: unique symbol;
 export declare const SYMBOL_NODE: unique symbol;
-export declare let compareById: (vector: any) => (a: any, b: any) => 1 | 0 | -1;
+export declare function compareById(vector: any): <T extends TreeNode<any>>(a: T, b: T) => 0 | 1 | -1;
 /**
  * remove-empty-children (for json tree)
  * @param {*} jTree
  * @param {*} node
  * @param {*} options
  */
-export declare let removeEmptyChildren: (jTree: any, node: any, options: any) => void;
+export declare function removeEmptyChildren(jTree: ReturnType<typeof serializeTree>, node: any, options: ITreeToJsonOptions): void;
 /**
  * search-node
  * @param {*} tree
@@ -22,14 +23,14 @@ export declare let removeEmptyChildren: (jTree: any, node: any, options: any) =>
  * @param {*} criteria
  * @param {*} options
  */
-export declare let searchNode: (tree: any, node: any, criteria: (parentNode: any) => boolean, options?: any) => any;
+export declare function searchNode<T>(tree: Tree<T>, node: TreeNode<T>, criteria: (parentNode: TreeNode<T>) => boolean, options?: any): TreeNode<T>;
 /**
  * showTree
  * @param {*} tree
  * @param {*} node
  * @param {*} level
  */
-export declare let showTree: (tree: any, node?: any, level?: number) => void;
+export declare function showTree(tree: any, node?: TreeNode, level?: number): void;
 /**
  * traversal-tree
  * @param {*} tree
@@ -37,7 +38,7 @@ export declare let showTree: (tree: any, node?: any, level?: number) => void;
  * @param {*} criteria
  * @param {*} callback
  */
-export declare function traversalTree(tree: Tree, node: any, criteria: any, callback: (currentNode) => void): void;
+export declare function traversalTree(tree: Tree, node: any, criteria: any, callback: (currentNode: any) => void): void;
 /**
  * serializeTree
  * @param {*} tree
@@ -45,8 +46,5 @@ export declare function traversalTree(tree: Tree, node: any, criteria: any, call
  * @param {*} target
  * @param {*} options
  */
-export declare let serializeTree: (tree: any, node: any, target: any[], options: {
-    key_children?: string;
-    empty_children?: boolean;
-}) => any[];
+export declare function serializeTree<T>(tree: Tree<T>, node: TreeNode<T>, target: T[], options: ITreeToJsonOptions): T[];
 export declare function sortKeys<T>(data: T): T;

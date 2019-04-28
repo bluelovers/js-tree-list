@@ -1,7 +1,4 @@
 import TreeNode from './node';
-/**
- * Created by user on 2018/4/3/003.
- */
 import Tree from './tree';
 import { sortKeys, SYMBOL_OPTIONS, SYMBOL_NODE } from './utils';
 

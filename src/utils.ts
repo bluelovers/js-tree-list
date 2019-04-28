@@ -4,15 +4,16 @@
  * @param  boolean  vector If vector is true then sort asc else desc
  * @return function Compare function
  */
-import Tree from './tree';
-import * as _sortObjectKeys from 'sort-object-keys2';
+import Tree, { ITreeToJsonOptions } from './tree';
+import _sortObjectKeys = require('sort-object-keys2');
+import TreeNode from './node';
 
 export const SYMBOL_OPTIONS = Symbol('options');
 export const SYMBOL_NODE = Symbol('node');
 
-export let compareById = vector =>
+export function compareById(vector)
 {
-	return (a, b) =>
+	return <T extends TreeNode>(a: T, b: T) =>
 	{
 		const aid = Number(a.get('id'))
 		const bid = Number(b.get('id'))
@@ -37,7 +38,7 @@ export let compareById = vector =>
  * @param {*} node
  * @param {*} options
  */
-export let removeEmptyChildren = (jTree, node = null, options) =>
+export function removeEmptyChildren(jTree: ReturnType<typeof serializeTree>, node = null, options: ITreeToJsonOptions)
 {
 	const { key_children } = options
 	node = node || jTree[0]
@@ -61,7 +62,7 @@ export let removeEmptyChildren = (jTree, node = null, options) =>
  * @param {*} criteria
  * @param {*} options
  */
-export let searchNode = (tree, node, criteria: (parentNode) => boolean, options?) =>
+export function searchNode<T>(tree: Tree<T>, node: TreeNode<T>, criteria: (parentNode: TreeNode<T>) => boolean, options?)
 {
 	const currentNode = node || tree.rootNode
 	if (criteria(currentNode))
@@ -69,7 +70,7 @@ export let searchNode = (tree, node, criteria: (parentNode) => boolean, options?
 		return currentNode
 	}
 	const children = currentNode.children
-	let target = null
+	let target: TreeNode<T> = null
 	for (let i = 0; i < children.length; i++)
 	{
 		const item = children[i]
@@ -87,7 +88,7 @@ export let searchNode = (tree, node, criteria: (parentNode) => boolean, options?
  * @param {*} node
  * @param {*} level
  */
-export let showTree = (tree, node = null, level = 1) =>
+export function showTree(tree, node: TreeNode = null, level = 1)
 {
 	node = node || tree[0]
 	if (node && node.content)
@@ -133,6 +134,15 @@ export function traversalTree(tree: Tree, node = null, criteria, callback: (curr
 	})
 }
 
+//export interface ISerializeTreeItem<T>
+//{
+//	[SYMBOL_OPTIONS]?: {
+//		tree: Tree<T>,
+//		options: Tree<T>["options"],
+//	},
+//	[k: string]: any,
+//}
+
 /**
  * serializeTree
  * @param {*} tree
@@ -140,10 +150,7 @@ export function traversalTree(tree: Tree, node = null, criteria, callback: (curr
  * @param {*} target
  * @param {*} options
  */
-export let serializeTree = (tree, node = null, target = [], options: {
-	key_children?: string,
-	empty_children?: boolean,
-}) =>
+export function serializeTree<T>(tree: Tree<T>, node: TreeNode<T> = null, target: T[] = [], options: ITreeToJsonOptions)
 {
 	const { key_children } = options
 	node = node || tree.rootNode

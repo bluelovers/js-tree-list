@@ -2,7 +2,7 @@ import LTT from './tree'
 // @ts-ignore
 import { inspect } from 'util';
 
-const defaultOptions = {
+const defaultOptions: IListToTreeOptions = {
 	key_id: 'id',
 	key_parent: 'parent',
 	key_child: 'child',
@@ -11,7 +11,7 @@ const defaultOptions = {
 	empty_children: false
 }
 
-function sortBy(collection, propertyA, propertyB)
+function sortBy<T>(collection: T[], propertyA: string, propertyB: string)
 {
 	return collection.sort(function (a, b)
 	{
@@ -34,28 +34,35 @@ function sortBy(collection, propertyA, propertyB)
 	})
 }
 
-export class ListToTree<T = any>
+export interface IListToTreeSourceObject
+{
+	[key: string]: unknown,
+}
+
+export interface IListToTreeOptions<T extends IListToTreeSourceObject = IListToTreeSourceObject>
+{
+	key_id?: string;
+	key_parent?: string;
+	key_child?: string;
+	key_last?: string;
+	uuid?: boolean;
+	empty_children?: boolean;
+}
+
+export type IListToTreeOptions2<T extends IListToTreeSourceObject> = IListToTreeOptions<T> & {
+	key_id?: string | keyof T;
+	key_parent?: string | keyof T;
+	key_child?: string | keyof T;
+}
+
+export class ListToTree<T extends IListToTreeSourceObject>
 {
 
-	options: {
-		key_id?: string;
-		key_parent?: string;
-		key_child?: string;
-		key_last?: string;
-		uuid?: boolean;
-		empty_children?: boolean;
-	};
+	options: IListToTreeOptions<T>;
 
 	tree: LTT;
 
-	constructor(list: T[], options: {
-		key_id?: string;
-		key_parent?: string;
-		key_child?: string;
-		key_last?: string;
-		uuid?: boolean;
-		empty_children?: boolean;
-	} = {})
+	constructor(list: T[], options: IListToTreeOptions2<T> = {})
 	{
 		const _list = list.map(item => item)
 

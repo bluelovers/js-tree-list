@@ -1,6 +1,6 @@
 {
   "name": "js-tree-list2",
-  "version": "1.1.18",
+  "version": "1.1.19",
   "description": "Convert list to tree, managing a tree and its nodes.",
   "keywords": [
     "data",
@@ -35,10 +35,12 @@
     "test": "npm run unit"
   },
   "dependencies": {
-    "shortid": "^2.2.8",
-    "sort-object-keys2": "^1.0.1"
+    "shortid": "^2.2.14",
+    "sort-object-keys2": "^1.1.0"
   },
   "devDependencies": {
-    "uuid": "^3.2.1"
+    "@bluelovers/tsconfig": "^1.0.3",
+    "@types/node": "^11.13.8",
+    "uuid": "^3.3.2"
   }
 }
